@@ -25,7 +25,6 @@ int menu() {
 	printf("\nMain Menu:");
 	printf("\n1 - Rule 30 1-D Cellular Automaton");
 	printf("\n2 - Custom 1-D Cellular Automaton");
-	printf("\n3 - 2-D Cellular Automaton");
 	printf("\n0 - Quit Program");
 	printf("\n");
 
@@ -70,9 +69,6 @@ int main() {
 				//Runs the 1-D cellular automaton with the supplied parameters.
 				generate(width, generations, rule);
 				printf("\nFinished generation.\n");
-				break;
-			case 3:
-				printf("\nNot yet implemented.\n");
 				break;
 			case 0:
 				printf("\nExiting program...\n");
