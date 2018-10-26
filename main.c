@@ -9,13 +9,13 @@
 		https://stackoverflow.com/questions/31577866/c-convert-integer-to-binary-array
 
 	TODO:
-		Input validation checks.
 		Option to wrap sides.
 		Option to write outputs to file.
 		Option to customise the starting row.
 		Option for 2D generations.
 */
 
+#include "validation.h"
 #include "1dCA.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -43,7 +43,7 @@ int main() {
 		//Displays the menu and receives an option from the user.
 		menu();
 		printf("\nEnter menu option: ");
-		scanf("%d", &option);
+		option = validInt();
 
 		//Runs the code relevant to the option the user selected.
 		switch(option) {
@@ -58,13 +58,13 @@ int main() {
 			case 2:
 				//Receives the parameters for the generate function from the user.
 				printf("\nEnter the number of cells for each row: ");
-				scanf("%d", &width);
+				width = validInt();
 
 				printf("Enter the number of rows to generate: ");
-				scanf("%d", &generations);
+				generations = validInt();
 
 				printf("Enter the rule for cell generation: ");
-				scanf("%d", &rule);
+				rule = validInt();
 
 				//Runs the 1-D cellular automaton with the supplied parameters.
 				generate(width, generations, rule);
