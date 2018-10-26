@@ -20,11 +20,20 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-/* Function for displaying the menu options. */
-int menu() {
+/* Function for displaying the menu options.
+	width		- The current custom width.
+	generations	- The current custom number of generations.
+	rule		- The current custom rule.
+*/
+int menu(int width, int generations, int rule) {
 	printf("\nMain Menu:");
 	printf("\n1 - Rule 30 1-D Cellular Automaton");
-	printf("\n2 - Custom 1-D Cellular Automaton");
+	printf("\n2 - Custom 1-D Cellular Automaton (%d cells, %d generations, rule %d)", width, generations, rule);
+	printf("\n\nCustom 1-D Cellular Automaton Options:");
+	printf("\n3 - Change Number of Cells for Custom Automaton");
+	printf("\n4 - Change Number of Generations for Custom Automaton");
+	printf("\n5 - Change Rule for Custom Automaton");
+	printf("\n\nOther:");
 	printf("\n0 - Quit Program");
 	printf("\n");
 
@@ -35,13 +44,13 @@ int menu() {
 int main() {
 	//Declares the required variables.
 	int option = 0;
-	int width;
-	int generations;
-	int rule;
+	int width = 31;
+	int generations = 16;
+	int rule = 30;
 
 	do {
 		//Displays the menu and receives an option from the user.
-		menu();
+		menu(width, generations, rule);
 		printf("\nEnter menu option: ");
 		option = validInt();
 
@@ -49,14 +58,16 @@ int main() {
 		switch(option) {
 			case 1:
 				//Runs the 1-D cellular automaton using rule 30.
-				width = 31;
-				generations = 16;
-				rule = 30;
-				generate(width, generations, rule);
+				generate(31, 16, 30);
 				printf("\nFinished generation.\n");
 				break;
 			case 2:
-				//Receives the parameters for the generate function from the user.
+				//Runs the 1-D cellular automaton with the supplied parameters.
+				generate(width, generations, rule);
+				printf("\nFinished generation.\n");
+				break;
+			case 3:
+				//Receives a custom number of cells from the user.
 				printf("\nEnter the number of cells for each row: ");
 				width = validInt();
 
@@ -65,8 +76,10 @@ int main() {
 					printf("Width must be at least 1: ");
 					width = validInt();
 				}
-
-				printf("Enter the number of rows to generate: ");
+				break;
+			case 4:
+				//Receives a custom number of rows from the user.
+				printf("\nEnter the number of rows to generate: ");
 				generations = validInt();
 
 				//Makes sure the number of generations is at least 1.
@@ -74,8 +87,10 @@ int main() {
 					printf("Rows must be at least 1: ");
 					generations = validInt();
 				}
-
-				printf("Enter the rule for cell generation: ");
+				break;
+			case 5:
+				//Receives a custom rule from the user.
+				printf("\nEnter the rule for cell generation: ");
 				rule = validInt();
 
 				//Makes sure the rule is within the valid range of values.
@@ -83,10 +98,6 @@ int main() {
 					printf("Rule must be a number between 0 and 255: ");
 					rule = validInt();
 				}
-
-				//Runs the 1-D cellular automaton with the supplied parameters.
-				generate(width, generations, rule);
-				printf("\nFinished generation.\n");
 				break;
 			case 0:
 				printf("\nExiting program...\n");
