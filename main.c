@@ -60,11 +60,29 @@ int main() {
 				printf("\nEnter the number of cells for each row: ");
 				width = validInt();
 
+				//Makes sure the width is at least 1.
+				while (width < 0) {
+					printf("Width must be at least 1: ");
+					width = validInt();
+				}
+
 				printf("Enter the number of rows to generate: ");
 				generations = validInt();
 
+				//Makes sure the number of generations is at least 1.
+				while (generations < 0) {
+					printf("Rows must be at least 1: ");
+					generations = validInt();
+				}
+
 				printf("Enter the rule for cell generation: ");
 				rule = validInt();
+
+				//Makes sure the rule is within the valid range of values.
+				while (rule < 0 || rule > 255) {
+					printf("Rule must be a number between 0 and 255: ");
+					rule = validInt();
+				}
 
 				//Runs the 1-D cellular automaton with the supplied parameters.
 				generate(width, generations, rule);
