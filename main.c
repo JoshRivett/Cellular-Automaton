@@ -29,13 +29,88 @@ int menu(int width, int generations, int rule) {
 	printf("\nMain Menu:");
 	printf("\n1 - Rule 30 1-D Cellular Automaton");
 	printf("\n2 - Custom 1-D Cellular Automaton (%d cells, %d generations, rule %d)", width, generations, rule);
-	printf("\n\nCustom 1-D Cellular Automaton Options:");
-	printf("\n3 - Change Number of Cells for Custom Automaton");
-	printf("\n4 - Change Number of Generations for Custom Automaton");
-	printf("\n5 - Change Rule for Custom Automaton");
 	printf("\n\nOther:");
+	printf("\n3 - Options");
 	printf("\n0 - Quit Program");
 	printf("\n");
+
+	return 0;
+}
+
+/* Function for displaying the options menu.
+	width		- The current custom width.
+	generations	- The current number of generations.
+	rule		- The current custom rule.
+*/
+int optionsMenu(int width, int generations, int rule) {
+	printf("\nCustom 1-D Cellular Automaton Options:");
+	printf("\n1 - Change Number of Cells for Custom Automaton (Current: %d)", width);
+	printf("\n2 - Change Number of Generations for Custom Automaton (Current: %d)", generations);
+	printf("\n3 - Change Rule for Custom Automaton (Current: %d)", rule);
+	printf("\n0 - Back to Main Menu\n");
+
+	return 0;
+}
+
+/* Function for running the options menu.
+	*width			- Pointer to the width variable.
+	*generations	- Pointer to the generations variable.
+	*rule			- Pointer to the rule variable.
+*/
+int options(int *width, int *generations, int *rule) {
+	//Declares the required variables.
+	int option = 0;
+
+	do {
+		//Displays the options menu and receives an option from the user.
+		optionsMenu(*width, *generations, *rule);
+		printf("\nEnter menu option: ");
+		option = validInt();
+
+		//Runs the code relevant to the option the user selected.
+		switch(option) {
+			case 1:
+				//Receives a custom number of cells from the user.
+				printf("\nEnter the number of cells for each row: ");
+				*width = validInt();
+
+				//Makes sure the width is at least 1.
+				while (*width < 0) {
+					printf("Width must be at least 1: ");
+					*width = validInt();
+				}
+				break;
+			case 2:
+				//Receives a custom number of rows from the user.
+				printf("\nEnter the number of rows to generate: ");
+				*generations = validInt();
+
+				//Makes sure the number of generations is at least 1.
+				while (*generations < 0) {
+					printf("Rows must be at least 1: ");
+					*generations = validInt();
+				}
+				break;
+			case 3:
+				//Receives a custom rule from the user.
+				printf("\nEnter the rule for cell generation: ");
+				*rule = validInt();
+
+				//Makes sure the rule is within the valid range of values.
+				while (*rule < 0 || *rule > 255) {
+					printf("Rule must be a number between 0 and 255: ");
+					*rule = validInt();
+				}
+				break;
+			case 0:
+				printf("\nReturning to main menu...\n");
+				break;
+			default:
+				printf("\nInvalid menu option.\n");
+				break;
+		}
+	//Exits the menu loop if the user enters 0.
+	} while (option != 0);
 
 	return 0;
 }
@@ -67,37 +142,7 @@ int main() {
 				printf("\nFinished generation.\n");
 				break;
 			case 3:
-				//Receives a custom number of cells from the user.
-				printf("\nEnter the number of cells for each row: ");
-				width = validInt();
-
-				//Makes sure the width is at least 1.
-				while (width < 0) {
-					printf("Width must be at least 1: ");
-					width = validInt();
-				}
-				break;
-			case 4:
-				//Receives a custom number of rows from the user.
-				printf("\nEnter the number of rows to generate: ");
-				generations = validInt();
-
-				//Makes sure the number of generations is at least 1.
-				while (generations < 0) {
-					printf("Rows must be at least 1: ");
-					generations = validInt();
-				}
-				break;
-			case 5:
-				//Receives a custom rule from the user.
-				printf("\nEnter the rule for cell generation: ");
-				rule = validInt();
-
-				//Makes sure the rule is within the valid range of values.
-				while (rule < 0 || rule > 255) {
-					printf("Rule must be a number between 0 and 255: ");
-					rule = validInt();
-				}
+				options(&width, &generations, &rule);
 				break;
 			case 0:
 				printf("\nExiting program...\n");
