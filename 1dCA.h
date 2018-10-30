@@ -12,9 +12,10 @@
 /* Function for creating a new generation.
 	width		- the number of cells on each row.
 	generations	- the number of rows to generate.
-	rule	- the rule to use for cell generation.
+	rule		- the rule to use for cell generation.
+	wrap		- whether or not the generation should wrap the sides.
 */
-int generate(int width, int generations, int rule);
+int generate(int width, int generations, int rule, _Bool wrap);
 
 
 /* Function for checking what state a cell should be in a new generation.

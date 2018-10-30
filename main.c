@@ -7,6 +7,7 @@
 		https://natureofcode.com/book/chapter-7-cellular-automata/
 		https://www.tutorialspoint.com/cprogramming/
 		https://stackoverflow.com/questions/31577866/c-convert-integer-to-binary-array
+		https://stackoverflow.com/questions/17307275/what-is-the-printf-format-specifier-for-bool
 
 	TODO:
 		Option to wrap sides.
@@ -40,12 +41,13 @@ int menu() {
 	generations	- The current number of generations.
 	rule		- The current custom rule.
 */
-int customMenu(int width, int generations, int rule) {
+int customMenu(int width, int generations, int rule, _Bool wrap) {
 	printf("\nCustom 1-D Cellular Automaton Options:");
 	printf("\n1 - Generate");
 	printf("\n2 - Change Number of Cells for Custom Automaton (Current: %d)", width);
 	printf("\n3 - Change Number of Generations for Custom Automaton (Current: %d)", generations);
 	printf("\n4 - Change Rule for Custom Automaton (Current: %d)", rule);
+	printf("\n5 - Toggle Side Wrap (Current: %s)", wrap ? "true" : "false");
 	printf("\n0 - Back to Main Menu\n");
 
 	return 0;
@@ -58,10 +60,11 @@ int customGeneration() {
 	int width = 31;
 	int generations = 16;
 	int rule = 30;
+	_Bool wrap = 0;
 
 	do {
 		//Displays the options menu and receives an option from the user.
-		customMenu(width, generations, rule);
+		customMenu(width, generations, rule, wrap);
 		printf("\nEnter menu option: ");
 		option = validInt();
 
@@ -69,7 +72,7 @@ int customGeneration() {
 		switch(option) {
 			case 1:
 				//Runs the 1-D cellular automaton with the supplied parameters.
-				generate(width, generations, rule);
+				generate(width, generations, rule, wrap);
 				printf("\nFinished generation.\n");
 				break;
 			case 2:
@@ -105,6 +108,16 @@ int customGeneration() {
 					rule = validInt();
 				}
 				break;
+			case 5:
+				//Switches the wrap variable to be true if false and vice versa.
+				if (wrap == 0) {
+					wrap = 1;
+					printf("\nSide wrap set to true.\n");
+				} else {
+					wrap = 0;
+					printf("\nSide wrap set to false.\n");
+				}
+				break;
 			case 0:
 				printf("\nReturning to main menu...\n");
 				break;
@@ -133,7 +146,7 @@ int main() {
 		switch(option) {
 			case 1:
 				//Runs the 1-D cellular automaton using rule 30.
-				generate(31, 16, 30);
+				generate(31, 16, 30, 0);
 				printf("\nFinished generation.\n");
 				break;
 			case 2:

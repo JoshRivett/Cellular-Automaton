@@ -11,8 +11,10 @@
 /* Function for creating a new generation.
 	width		- the number of cells on each row.
 	generations	- the number of rows to generate.
+	rule		- the rule to use for cell generation.
+	wrap		- whether or not the generation should wrap the sides.		-
 */
-int generate(int width, int generations, int rule) {
+int generate(int width, int generations, int rule, _Bool wrap) {
 	//Modifies the input parameters as required.
 	width += 2;
 	generations -= 1;
@@ -29,6 +31,12 @@ int generate(int width, int generations, int rule) {
 
 	//Sets the start state of the parent cells.
 	parent[width/2] = 1;
+
+	//Wraps the sides if side wrap is on.
+	if (wrap == 1) {
+		parent[0] = parent[width - 2];
+		parent[width - 1] = parent[1];
+	}
 
 	//Takes a line break.
 	printf("\n");
@@ -63,6 +71,12 @@ int generate(int width, int generations, int rule) {
 		//Sets the new generation to be the new parent generation.
 		for (int j = 0; j < width; j++) {
 				parent[j] = child[j];
+		}
+
+		//Wraps the sides if side wrap is on.
+		if (wrap == 1) {
+			parent[0] = parent[width - 2];
+			parent[width - 1] = parent[1];
 		}
 
 		//Takes a line break.
