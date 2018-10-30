@@ -94,29 +94,59 @@ int generate(int width, int generations, int rule, _Bool wrap) {
 */
 int rules(int left, int middle, int right, int rule) {
 	//Declares the required variables.
-	int i = 0;
 	int ruleset[8];
+	int decimal;
+	int binaryInt[3] = {left, middle, right};
 
 	//Initialises the ruleset array.
 	for (int i = 0; i < 8; i++) {
 		ruleset[i] = 0;
 	}
 
-	//Converts the rule to an array of binary digits.
-	while (rule > 0) {
-		ruleset[i] = rule % 2;
-		i++;
-		rule /= 2;
-	}
+	//Converts the decimal rule to its bianry equivalent.
+	toBinary(rule, ruleset);
 
-	//Creates a binary string based on the 3 input parameters.
-	char binary[3] = {left + '0', middle + '0', right + '0'};
-	char *ptr;
-	long decimal;
-
-	//Converts the binary string to a long int.
-	decimal = strtol(binary, &ptr, 2);
+	//Gets the decimal equivalent of the binary input parameters.
+	decimal = toDecimal(binaryInt, 3);
 
 	//Returns the state of the new cell according to the ruleset.
 	return ruleset[decimal];
+}
+
+/* Function for converting a decimal number to a binary array.
+	decimal	- the decimal number to be converted.
+	*binary	- the array to store the binary number in.
+*/
+int toBinary(int decimal, int *binary) {
+	int i = 0;
+
+	//Converts the rule to an array of binary digits.
+	while (decimal > 0) {
+		binary[i] = decimal % 2;
+		i++;
+		decimal /= 2;
+	}
+
+	return SUCCESS;
+}
+
+/* Function to convert an array of binary integers to a decimal number.
+	*binaryInt	- pointer to an array of binary integers.
+	length		- the length of the array.
+*/
+int toDecimal(int *binaryInt, int length) {
+	//Initialises the required variables.
+	char binaryString[length];
+	char *ptr;
+	long decimal;
+
+	//Converts the integer array to a character array.
+	for (int i = 0; i < length; i++) {
+		binaryString[i] = binaryInt[i] + '0';
+	}
+
+	//Converts the binary string to a long int.
+	decimal = strtol(binaryString, &ptr, 2);
+
+	return decimal;
 }

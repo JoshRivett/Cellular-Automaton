@@ -29,5 +29,13 @@ int rules(int left, int middle, int right, int rule);
 
 /* Function for converting a decimal number to a binary array.
 	decimal	- the decimal number to be converted.
+	*binary	- the array to store the binary number in.
 */
-int toBinary(int decimal);
+int toBinary(int decimal, int *binary);
+
+
+/* Function to convert an array of binary integers to a decimal number.
+	*binaryInt	- pointer to an array of binary integers.
+	length		- the length of the array.
+*/
+int toDecimal(int *binaryInt, int length);
