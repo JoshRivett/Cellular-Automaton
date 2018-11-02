@@ -10,7 +10,8 @@
 #define SUCCESS		100 //Successful completion of a function with nothing else to return.
 #define BAD_FILE	101 //The file could not be opened.
 
-#define dark "\x1B[5;30;40m \x1B[0m"
+// #define dark "\x1B[3;30;40m \x1B[0m" -- doesnt work in some terminals
+#define dark "x"
 #define light " "
 
 /* Function for creating a new generation.
