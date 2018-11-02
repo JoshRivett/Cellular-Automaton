@@ -1,7 +1,7 @@
 /*
-	Name: Josh Rivett
-	Matric Number: 170005367
-	Module Code: AC21009
+	Name: 			Josh Rivett	Naqash Nadeem	Justas Samuolis
+	Matric Number:	170005367	160010238		170020434
+	Module Code:	AC21009
 */
 
 #include "1dCA.h"

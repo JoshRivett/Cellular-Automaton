@@ -1,16 +1,13 @@
 /*
-	Name: Josh Rivett
-	Matric Number: 170005367
-	Module Code: AC21009
+	Name: 			Josh Rivett	Naqash Nadeem	Justas Samuolis
+	Matric Number:	170005367	160010238		170020434
+	Module Code:	AC21009
 
 	References:
 		https://natureofcode.com/book/chapter-7-cellular-automata/
 		https://www.tutorialspoint.com/cprogramming/
 		https://stackoverflow.com/questions/31577866/c-convert-integer-to-binary-array
 		https://stackoverflow.com/questions/17307275/what-is-the-printf-format-specifier-for-bool
-
-	TODO:
-		Option for 2D generations.
 */
 
 #include "validation.h"
