@@ -12,6 +12,7 @@
 
 #include "validation.h"
 #include "1dCA.h"
+#include "GoL.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
@@ -21,6 +22,7 @@ int menu() {
 	printf("\nMain Menu:");
 	printf("\n1 - Rule 30 1-D Cellular Automaton");
 	printf("\n2 - Custom 1-D Cellular Automaton");
+	printf("\n3 - Start Game of Life");
 	printf("\n0 - Quit Program");
 	printf("\n");
 
@@ -264,6 +266,10 @@ int main() {
 				break;
 			case 0:
 				printf("\nExiting program...\n");
+				break;
+			case 3:
+				printf("\nEnter desired FPS: ");
+				generateGoL(validInt());
 				break;
 			default:
 				printf("\nInvalid menu option.\n");

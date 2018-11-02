@@ -18,6 +18,7 @@ void decToBinary(int dec, _Bool **newarr, int N) {
     (*newarr)[c++] = k & 1;
   }
 }
+
 void nextGen(_Bool **arr, _Bool binaryRule[], int N) {
 	_Bool x, y, z;
 	_Bool *tempArr = malloc(N);
@@ -27,9 +28,9 @@ void nextGen(_Bool **arr, _Bool binaryRule[], int N) {
 	}
 
 	for (int i = 0; i < N; i++) {
-		x = i - 1 >= 0 ? (*arr)[i-1] : 0;
+		x = i - 1 >= 0 ? (*arr)[i-1] : (*arr)[N-1];
 		y = (*arr)[i];
-		z = i + 1 < N ? (*arr)[i+1] : 0;
+		z = i + 1 < N ? (*arr)[i+1] : (*arr)[0];
 		tempArr[i] = binaryRule[7 - (x * 4 + y * 2 + z)];
 	}
 
@@ -43,10 +44,7 @@ void printGen(_Bool arr[], int N) {
 	}
 	printf("\n");
 }
-/* Function for creating a new generation.
-	width		- the number of cells on each row.
-	generations	- the number of rows to generate.
-*/
+
 void generate(int width, int generations, int rule) {
 	_Bool *binaryRule = NULL, *gen = malloc(width);
 	if (gen == NULL) {
@@ -69,11 +67,9 @@ void generate(int width, int generations, int rule) {
 	free(gen);
 }
 
-
-
 int main() {
 	clock_t start = clock(), diff;
-	generate(100, 100, 30);
+	generate(150, 100, 30);
 	diff = clock() - start;
 	int msec = diff * 1000 / CLOCKS_PER_SEC;
 	printf("Time taken %d seconds %d milliseconds\n", msec/1000, msec%1000);
