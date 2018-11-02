@@ -12,9 +12,11 @@
 	width		- the number of cells on each row.
 	generations	- the number of rows to generate.
 	rule		- the rule to use for cell generation.
-	wrap		- whether or not the generation should wrap the sides.		-
+	startingRow	- the row of cells to start with.
+	wrap		- whether or not the generation should wrap the sides.
+	writeToFile	- whether or not to write the output to a file.
 */
-int generate(int width, int generations, int rule, _Bool wrap) {
+int generate(int width, int generations, int rule, int *startingRow, _Bool wrap, _Bool writeToFile) {
 	//Modifies the input parameters as required.
 	width += 2;
 	generations -= 1;
@@ -23,6 +25,10 @@ int generate(int width, int generations, int rule, _Bool wrap) {
 	int parent[width];
 	int child[width];
 
+	//Declares the required file variables.
+	FILE *outputFile;
+	char fileName[] = "output.txt";
+
 	//Initialises all the elements within the arrays as 0.
 	for (int i = 0; i < width; i++) {
 		parent[i] = 0;
@@ -30,7 +36,29 @@ int generate(int width, int generations, int rule, _Bool wrap) {
 	}
 
 	//Sets the start state of the parent cells.
-	parent[width/2] = 1;
+	for (int i = 1; i < (width - 1); i++) {
+		parent[i] = startingRow[i - 1];
+	}
+
+	//Checks whether to write the output to a file or not.
+	if (writeToFile == 1) {
+		//Creates a file and makes sure it can be opened.
+		outputFile = fopen(fileName, "w");
+
+		//Checks if the file could be opened and if not, returns an error code.
+		if (outputFile == NULL) {
+			return BAD_FILE;
+		}
+
+		for (int i = 1; i < (width - 1); i++) {
+			if (parent[i] == 0) {
+				fprintf(outputFile, "   ");
+			} else {
+				fprintf(outputFile, " # ");
+			}
+		}
+		fprintf(outputFile, "\n");
+	}
 
 	//Wraps the sides if side wrap is on.
 	if (wrap == 1) {
@@ -43,11 +71,7 @@ int generate(int width, int generations, int rule, _Bool wrap) {
 
 	//Prints the initial generation of the cells.
 	for (int i = 1; i < width - 1; i++) {
-		if (parent[i] == 0) {
-			printf("   ");
-		} else {
-			printf(" # ");
-		}
+		printf(parent[i] ? dark : light);
 	}
 
 	//Takes a line break.
@@ -61,16 +85,24 @@ int generate(int width, int generations, int rule, _Bool wrap) {
 			child[j] = rules(parent[j-1], parent[j], parent[j+1], rule);
 
 			//Prints the state of the current cell.
-			if (child[j] == 0) {
-				printf("   ");
-			} else {
-				printf(" # ");
-			}
+			printf(child[j] ? dark : light);
 		}
 
 		//Sets the new generation to be the new parent generation.
 		for (int j = 0; j < width; j++) {
 				parent[j] = child[j];
+		}
+
+		//Writes the new parent generation to file.
+		if (writeToFile == 1) {
+			for (int i = 1; i < (width - 1); i++) {
+				if (parent[i] == 0) {
+					fprintf(outputFile, "   ");
+				} else {
+					fprintf(outputFile, " # ");
+				}
+			}
+			fprintf(outputFile, "\n");
 		}
 
 		//Wraps the sides if side wrap is on.
@@ -81,6 +113,12 @@ int generate(int width, int generations, int rule, _Bool wrap) {
 
 		//Takes a line break.
 		printf("\n");
+	}
+
+	//Closes the output file if it was opened.
+	if (writeToFile == 1) {
+		fclose(outputFile);
+		printf("\nOutput saved in '%s'.\n", fileName);
 	}
 
 	return SUCCESS;
@@ -133,6 +171,7 @@ int toBinary(int decimal, int *binary) {
 /* Function to convert an array of binary integers to a decimal number.
 	*binaryInt	- pointer to an array of binary integers.
 	length		- the length of the array.
+	Returns the decimal equivalent to the binary number passed in.
 */
 int toDecimal(int *binaryInt, int length) {
 	//Initialises the required variables.

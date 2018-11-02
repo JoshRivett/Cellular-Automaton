@@ -8,14 +8,20 @@
 
 /* Error Codes */
 #define SUCCESS		100 //Successful completion of a function with nothing else to return.
+#define BAD_FILE	101 //The file could not be opened.
+
+#define dark "\x1B[5;30;40m \x1B[0m"
+#define light " "
 
 /* Function for creating a new generation.
 	width		- the number of cells on each row.
 	generations	- the number of rows to generate.
 	rule		- the rule to use for cell generation.
+	startingRow	- the row of cells to start with.
 	wrap		- whether or not the generation should wrap the sides.
+	writeToFile	- whether or not to write the output to a file.
 */
-int generate(int width, int generations, int rule, _Bool wrap);
+int generate(int width, int generations, int rule, int *startingRow, _Bool wrap, _Bool writeToFile);
 
 
 /* Function for checking what state a cell should be in a new generation.
@@ -37,5 +43,6 @@ int toBinary(int decimal, int *binary);
 /* Function to convert an array of binary integers to a decimal number.
 	*binaryInt	- pointer to an array of binary integers.
 	length		- the length of the array.
+	Returns the decimal equivalent to the binary number passed in.
 */
 int toDecimal(int *binaryInt, int length);
